@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+nav {
+  background-color: lightgreen;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav h1 a {
+  font-size: 22px;
+}
+
+nav a {
+  color: white;
+  margin: 0 20px;
+  font-size: 18px;
+}
+
+nav a:hover {
+  color: green;
+}
+
+.container {
+  margin: 20px;
+}
+
+.blog-card {
+  margin: 20px 0;
+}
