@@ -2,8 +2,12 @@ const express = require("express");
 let morgan = require("morgan");
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+
 const mongoose = require("mongoose");
+const expressLayouts = require('express-ejs-layouts');
 const Blog = require("./models/Blog");
+const blogRoutes=require("./routes/blogRoute");
 
 //db url
 let mongoUrl =
@@ -23,6 +27,9 @@ mongoose
 
 app.set("views", "./views");
 app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set('layout', 'layouts/default');
+
 
 app.use(morgan("dev"));
 app.use(express.static("public"));
@@ -38,21 +45,10 @@ app.get("/add-blog", async (req, res) => {
   res.send("blog saved");
 });
 
-app.get("/single-blog", async (req, res) => {
-  let blog = await Blog.findById("65d0cf76fbe882e88d044a33");
+app.get('/',async(req,res)=>{
+  res.redirect('/blogs');
+})
 
-  res.json(blog);
-});
-
-app.get("/", async (req, res) => {
-  let blogs = await Blog.find().sort({ createdAt: -1 });
-  console.log(blogs);
-
-  res.render("home", {
-    blogs,
-    title: "Home",
-  });
-});
 
 app.get("/about", (req, res) => {
   res.render("about", {
@@ -65,6 +61,8 @@ app.get("/contact", (req, res) => {
     title: "Contact",
   });
 });
+
+app.use('/blogs',blogRoutes);
 
 app.use((req, res) => {
   res.status(404).render("404", {

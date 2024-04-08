@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<%- include('./components/head.ejs') %>
-
-<body>
-
-  <%- include('./components/navbar.ejs') %>
-
-  <div class="container">
     <% if(blogs.length) { %>
     <% blogs.forEach(blog => {  %>
     <div class="blog-card">
-      <h1><%= blog.title  %></h1>
+      <a href="/blogs/<%= blog._id %>">
+        <h1><%= blog.title  %></h1>
+      </a>
       <p><%= blog.intro  %></p>
+      <form action="/blogs/<%= blog._id %>/delete" method="POST">
+        <button class="blog-delete-btn" type="submit">Delete</button>
+      </form>
     </div>
     <% }) %>
     <% } else { %>
     <h3>No Blogs Found.</h3>
     <% } %>
-  </div>
-</body>
-
-</html>
